@@ -23,9 +23,10 @@ class AddToCollectionLightButton extends StatelessWidget {
       child: isLoading
           ? const CircularProgressIndicator()
           : isFavorite
-              ? const Icon(
+              ? IconButton(
+                  onPressed: onPressed,
                   key: removeFromCollectionButtonKey,
-                  Icons.bookmark_added,
+                  icon: const Icon(Icons.bookmark_added),
                   color: Colors.white,
                 )
               : CircleAvatar(

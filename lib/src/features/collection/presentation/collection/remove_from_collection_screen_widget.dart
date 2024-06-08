@@ -1,7 +1,8 @@
-import 'package:love_cooking_app/src/common_widgets/favorite_button.dart';
+import 'package:love_cooking_app/src/common_widgets/add_to_collection_dark_button.dart';
 import 'package:love_cooking_app/src/features/recipes/domain/recipe.dart';
 import 'package:love_cooking_app/src/features/collection/application/collection_service.dart';
 import 'package:love_cooking_app/src/features/collection/presentation/collection/collection_screen_controller.dart';
+import 'package:love_cooking_app/src/localization/string_hardcoded.dart';
 import 'package:love_cooking_app/src/utils/show_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,7 +19,7 @@ class RemoveFromCollectionScreenWidget extends ConsumerWidget {
     final state = ref.watch(collectionScreenControllerProvider);
     final isFavorite = ref.watch(isFavoriteProvider(recipe.id));
 
-    return FavoriteButton(
+    return AddToCollectionDarkButton(
       isLoading: state.isLoading,
       isFavorite: isFavorite,
       onPressed: state.isLoading
@@ -30,7 +31,7 @@ class RemoveFromCollectionScreenWidget extends ConsumerWidget {
 
               state.copyWithPrevious(state).hasError
                   ? null
-                  : showSnackBar(context, 'Removed from Collection');
+                  : showSnackBar(context, 'Removed from Collection'.hardcoded);
             },
     );
   }

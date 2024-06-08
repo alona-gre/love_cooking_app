@@ -148,20 +148,22 @@ class RecipeDetails extends ConsumerWidget {
     return ResponsiveTwoColumnLayoutWithSwitch(
       startContent: Padding(
         padding: const EdgeInsets.all(Sizes.p16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Ingredients',
-              style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
-            const SizedBox(height: 14),
-            ...recipe.ingredients.map((ingredient) => IngredientRow(
-                  ingredient: ingredient,
-                )),
-          ],
+        child: Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Ingredients',
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+              const SizedBox(height: 14),
+              ...recipe.ingredients.map((ingredient) => IngredientRow(
+                    ingredient: ingredient,
+                  )),
+            ],
+          ),
         ),
       ),
       spacing: Sizes.p16,
@@ -215,6 +217,7 @@ class _IngredientRowState extends State<IngredientRow> {
               Text(
                 widget.ingredient,
                 style: Theme.of(context).textTheme.bodyLarge,
+                overflow: TextOverflow.visible,
               ),
               const Spacer(),
               Checkbox(
