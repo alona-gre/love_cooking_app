@@ -1,92 +1,83 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:love_cooking_app/src/common_widgets/alert_dialogs.dart';
+import 'package:love_cooking_app/src/features/authentication/data/fake_auth_repository.dart';
+import 'package:love_cooking_app/src/features/authentication/presentation/account/account_screen_controller.dart';
+import 'package:love_cooking_app/src/localization/string_hardcoded.dart';
+import 'package:love_cooking_app/src/routing/app_router.dart';
+import 'package:love_cooking_app/src/utils/async_value_ui.dart';
 
-class DrawerMenu extends StatelessWidget {
-  final String userName;
-  final String userEmail;
-
-  const DrawerMenu(
-      {required this.userName, required this.userEmail, super.key});
+class DrawerMenu extends ConsumerWidget {
+  const DrawerMenu({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen<AsyncValue>(
+      accountScreenControllerProvider,
+      (_, state) => state.showAlertDialogOnError(context),
+    );
+
+    final user = ref.watch(authStateChangesProvider).value;
+
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
           UserAccountsDrawerHeader(
-            accountName: Text(userName),
-            accountEmail: Text(userEmail),
-            currentAccountPicture: CircleAvatar(
-              backgroundColor: Colors.blue,
-              child: Text(
-                userName.substring(0, 2).toUpperCase(),
-                style: TextStyle(fontSize: 24.0, color: Colors.white),
-              ),
+              decoration: const BoxDecoration(color: Colors.black),
+              accountName: Text(user?.email ?? 'Guest'),
+              accountEmail: Text(user?.email ?? ''),
+              currentAccountPicture: const CircleAvatar(
+                backgroundColor: Colors.grey,
+              )),
+          ListTile(
+            leading: const Icon(Icons.account_circle),
+            title: Text(user != null ? 'Profile' : 'Log In'),
+            onTap: () => user != null
+                ? {
+                    Scaffold.of(context).closeDrawer(),
+                    context.goNamed(AppRoute.account.name),
+                  }
+                : context.goNamed(AppRoute.signIn.name), // Login route
+          ),
+          if (user != null)
+            ListTile(
+              leading: const Icon(Icons.card_membership),
+              title: Text('Membership'.hardcoded),
+              onTap: () => showNotImplementedAlertDialog(context: context),
             ),
+          ListTile(
+            leading: const Icon(Icons.settings),
+            title: Text('Settings'.hardcoded),
+            onTap: () => showNotImplementedAlertDialog(context: context),
           ),
           ListTile(
-            leading: Icon(Icons.account_circle),
-            title: Text('Profile'),
-            onTap: () {
-              // Handle profile tap
-            },
+            leading: const Icon(Icons.new_releases),
+            title: Text("What's new".hardcoded),
+            onTap: () => showNotImplementedAlertDialog(context: context),
           ),
           ListTile(
-            leading: Icon(Icons.card_membership),
-            title: Text('Membership'),
-            onTap: () {
-              // Handle membership tap
-            },
+            leading: const Icon(Icons.help),
+            title: Text('Help'.hardcoded),
+            onTap: () => showNotImplementedAlertDialog(context: context),
           ),
-          ListTile(
-            leading: Icon(Icons.bluetooth),
-            title: Text('Pair device'),
-            onTap: () {
-              // Handle pair device tap
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Settings'),
-            onTap: () {
-              // Handle settings tap
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.shopping_bag),
-            title: Text('Shop'),
-            onTap: () {
-              // Handle shop tap
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.report_problem),
-            title: Text('Report an issue'),
-            onTap: () {
-              // Handle report an issue tap
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.new_releases),
-            title: Text("What's new"),
-            onTap: () {
-              // Handle what's new tap
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.help),
-            title: Text('Help'),
-            onTap: () {
-              // Handle help tap
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.logout),
-            title: Text('Log out'),
-            onTap: () {
-              // Handle log out tap
-            },
-          ),
+          if (user != null)
+            ListTile(
+              leading: const Icon(Icons.logout),
+              title: Text('Log out'.hardcoded),
+              onTap: () async {
+                final logout = await showAlertDialog(
+                  context: context,
+                  title: 'Are you sure?'.hardcoded,
+                  cancelActionText: 'Cancel'.hardcoded,
+                  defaultActionText: 'Logout'.hardcoded,
+                );
+                if (logout == true) {
+                  ref.read(accountScreenControllerProvider.notifier).signOut();
+                }
+              },
+            )
         ],
       ),
     );

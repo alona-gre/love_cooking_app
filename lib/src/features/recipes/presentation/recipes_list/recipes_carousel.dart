@@ -76,7 +76,7 @@ class RecipesCarouselSlider extends StatelessWidget {
         );
       },
       options: CarouselOptions(
-        height: 400.0,
+        height: 380.0,
         enlargeCenterPage: false,
         autoPlay: false,
         aspectRatio: 16 / 9,

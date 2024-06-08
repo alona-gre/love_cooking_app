@@ -31,11 +31,8 @@ class AddToCollectionDarkButton extends StatelessWidget {
               : CircleAvatar(
                   backgroundColor: Colors.black54,
                   child: IconButton(
-                    icon: const Icon(Icons.add, color: Colors.white),
-                    onPressed: () {
-                      onPressed;
-                    },
-                  ),
+                      icon: const Icon(Icons.add, color: Colors.white),
+                      onPressed: onPressed),
                 ),
     );
   }

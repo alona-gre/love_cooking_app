@@ -15,9 +15,7 @@ part 'app_router.g.dart';
 
 enum AppRoute {
   home,
-
   recipe,
-
   collection,
   account,
   signIn,

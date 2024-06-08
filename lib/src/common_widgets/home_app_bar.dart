@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:love_cooking_app/src/common_widgets/collection_icon.dart';
 import 'package:love_cooking_app/src/features/authentication/data/fake_auth_repository.dart';
+import 'package:love_cooking_app/src/features/filters/presentation/filters_bottom_sheet.dart';
+import 'package:love_cooking_app/src/routing/app_router.dart';
 
 // Import your providers and other dependencies here.
 
@@ -11,27 +14,27 @@ class HomeAppBar extends ConsumerWidget implements PreferredSizeWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(authStateChangesProvider).value;
 
-    //
-    //TODO final bool isHomePage = GoRouter.of(context).location == '/';
+    final currentPage = ref.read(goRouterProvider);
+    bool isHomePage =
+        currentPage.routeInformationProvider.value.uri.toString() == '/';
     // final String userName = user?.displayName ?? 'Guest';
 
     return AppBar(
-      leading:
-          // isHomePage  ?
-          IconButton(
-        icon: Icon(Icons.menu),
-        onPressed: () => Scaffold.of(context).openDrawer(),
-      ),
-      //   : null,
+      leading: isHomePage
+          ? IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () => Scaffold.of(context).openDrawer(),
+            )
+          : null,
       title: Text(user != null ? 'Hi, Username' : 'Hi'),
-      centerTitle: false, // Aligns title to the start
+      centerTitle: false,
       actions: [
+        const CollectionIcon(),
         IconButton(
-            key: const Key('filters'),
-            icon: const Icon(Icons.tune),
-            onPressed: () {
-              // TODO: show modal screen
-            }),
+          key: const Key('filters'),
+          icon: const Icon(Icons.tune),
+          onPressed: () => showFilterBottomSheet(context),
+        ),
       ],
     );
   }
