@@ -1,6 +1,6 @@
 import 'package:love_cooking_app/src/common_widgets/error_message_widget.dart';
 import 'package:love_cooking_app/src/common_widgets/shimmer_loading_cart_items_list.dart';
-import 'package:love_cooking_app/src/features/recipes/data/fake_recipes_repository.dart';
+import 'package:love_cooking_app/src/features/recipes/data/local/fake_recipes_repository.dart';
 import 'package:love_cooking_app/src/features/collection/domain/collection_item.dart';
 import 'package:love_cooking_app/src/features/collection/presentation/collection/remove_from_collection_screen_widget.dart';
 import 'package:love_cooking_app/src/routing/app_router.dart';

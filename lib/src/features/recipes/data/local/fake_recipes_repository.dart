@@ -49,6 +49,17 @@ class FakeRecipesRepository {
     _recipes.value = recipes;
   }
 
+  Future<void> updateRecipe(Recipe recipe) async {
+    await delay(addDelay);
+    final recipes = _recipes.value;
+    final recipeIndex = recipes.indexWhere((rec) => rec.id == recipe.id);
+    recipes.removeAt(recipeIndex);
+    recipes.insert(recipeIndex, recipe);
+    final updatedRecipes = recipes;
+
+    _recipes.value = updatedRecipes;
+  }
+
   /// Search for recipes where the title contains the search query
   Future<List<Recipe>> searchRecipes(String query) async {
     assert(

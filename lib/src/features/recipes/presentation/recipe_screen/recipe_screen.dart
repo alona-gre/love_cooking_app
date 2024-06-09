@@ -9,12 +9,14 @@ import 'package:love_cooking_app/src/common_widgets/responsive_two_column_layout
 import 'package:love_cooking_app/src/constants/app_sizes.dart';
 import 'package:love_cooking_app/src/features/collection/presentation/add_to_collection/add_to_collection_controller.dart';
 import 'package:love_cooking_app/src/features/collection/presentation/add_to_collection/add_to_collection_widget.dart';
-import 'package:love_cooking_app/src/features/recipes/data/fake_recipes_repository.dart';
+import 'package:love_cooking_app/src/features/recipes/data/local/fake_recipes_repository.dart';
+import 'package:love_cooking_app/src/features/recipes/domain/ingredient.dart';
 import 'package:love_cooking_app/src/features/recipes/domain/recipe.dart';
+import 'package:love_cooking_app/src/features/recipes/presentation/recipe_screen/quantity_selector/quantity_selector_widget.dart';
 import 'package:love_cooking_app/src/localization/string_hardcoded.dart';
 import 'package:love_cooking_app/src/utils/async_value_ui.dart';
 
-/// Shows the Recipe page for a given Recipe ID.
+//// Shows the Recipe page for a given Recipe ID.
 class RecipeScreen extends StatelessWidget {
   const RecipeScreen({super.key, required this.recipeId});
   final RecipeID recipeId;
@@ -102,7 +104,6 @@ class RecipePreview extends ConsumerWidget {
                 ),
               ],
             ),
-            // TODO: make it flexible instead of using gap
             gapH32,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -148,45 +149,45 @@ class RecipeDetails extends ConsumerWidget {
     return ResponsiveTwoColumnLayoutWithSwitch(
       startContent: Padding(
         padding: const EdgeInsets.all(Sizes.p16),
-        child: Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Ingredients',
-                style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-              const SizedBox(height: 14),
-              ...recipe.ingredients.map((ingredient) => IngredientRow(
-                    ingredient: ingredient,
-                  )),
-            ],
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Ingredients',
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+            gapH8,
+            QuantitySelectorWidget(recipe: recipe),
+            gapH8,
+            ...recipe.ingredients.map((ingredient) {
+              return IngredientRow(
+                ingredient: ingredient,
+              );
+            }),
+          ],
         ),
       ),
       spacing: Sizes.p16,
       endContent: Padding(
         padding: const EdgeInsets.all(Sizes.p16),
-        child: Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Steps',
-                style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-              const SizedBox(height: 14),
-              ...recipe.steps.asMap().entries.map((entry) {
-                int index = entry.key;
-                String step = entry.value;
-                return StepRow(step: step, stepNumber: index + 1);
-              }),
-            ],
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Steps',
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+            const SizedBox(height: 14),
+            ...recipe.steps.asMap().entries.map((entry) {
+              int index = entry.key;
+              String step = entry.value;
+              return StepRow(step: step, stepNumber: index + 1);
+            }),
+          ],
         ),
       ),
     );
@@ -194,7 +195,7 @@ class RecipeDetails extends ConsumerWidget {
 }
 
 class IngredientRow extends StatefulWidget {
-  final String ingredient;
+  final Ingredient ingredient;
   const IngredientRow({
     super.key,
     required this.ingredient,
@@ -214,12 +215,35 @@ class _IngredientRowState extends State<IngredientRow> {
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Row(
             children: [
-              Text(
-                widget.ingredient,
-                style: Theme.of(context).textTheme.bodyLarge,
-                overflow: TextOverflow.visible,
+              Expanded(
+                flex: 2,
+                child: Row(
+                  children: [
+                    widget.ingredient.quantity != null
+                        ? Text(
+                            widget.ingredient.quantity.toString(),
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          )
+                        : gapW12,
+                    gapW4,
+                    widget.ingredient.quantity != null
+                        ? Text(
+                            widget.ingredient.unit ?? '',
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          )
+                        : gapW12,
+                  ],
+                ),
               ),
-              const Spacer(),
+              Expanded(
+                flex: 4,
+                child: Text(
+                  widget.ingredient.name,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  overflow: TextOverflow.visible,
+                  maxLines: null, // Allow the text to take multiple lines
+                ),
+              ),
               Checkbox(
                   value: ingredientStatus,
                   onChanged: (value) {

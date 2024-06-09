@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/foundation.dart';
+import 'package:love_cooking_app/src/features/recipes/domain/ingredient.dart';
 
 /// * The recipe identifier is an important concept and can have its own type.
 typedef RecipeID = String;
@@ -19,6 +20,7 @@ class Recipe {
     required this.title,
     required this.description,
     required this.ingredients,
+    required this.portion,
   });
 
   /// Unique recipe id
@@ -27,7 +29,8 @@ class Recipe {
   final String title;
   final String description;
   final String imageUrl;
-  final List<String> ingredients;
+  final List<Ingredient> ingredients;
+  final int portion;
   final List<String> steps;
   final int duration;
   final bool isGlutenFree;
@@ -37,7 +40,7 @@ class Recipe {
 
   @override
   String toString() {
-    return 'Recipe(id: $id, imageUrl: $imageUrl, title: $title, description: $description, categories: $categories, ingredients: $ingredients, steps: $steps, duration: $duration, isGlutenFree: $isGlutenFree, isLactoseFree: $isLactoseFree, isVegan: $isVegan, isVegetarian: $isVegetarian)';
+    return 'Recipe(id: $id, imageUrl: $imageUrl, title: $title, description: $description, categories: $categories, ingredients: $ingredients, steps: $steps, duration: $duration, isGlutenFree: $isGlutenFree, isLactoseFree: $isLactoseFree, isVegan: $isVegan, isVegetarian: $isVegetarian, portion: $portion,)';
   }
 
   @override
@@ -80,7 +83,8 @@ class Recipe {
     String? title,
     String? description,
     String? imageUrl,
-    List<String>? ingredients,
+    List<Ingredient>? ingredients,
+    int? portion,
     List<String>? steps,
     int? duration,
     bool? isGlutenFree,
@@ -95,6 +99,7 @@ class Recipe {
       description: description ?? this.description,
       imageUrl: imageUrl ?? this.imageUrl,
       ingredients: ingredients ?? this.ingredients,
+      portion: portion ?? this.portion,
       steps: steps ?? this.steps,
       duration: duration ?? this.duration,
       isGlutenFree: isGlutenFree ?? this.isGlutenFree,

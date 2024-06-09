@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:love_cooking_app/src/common_widgets/alert_dialogs.dart';
 import 'package:love_cooking_app/src/common_widgets/custom_text_button.dart';
 import 'package:love_cooking_app/src/common_widgets/primary_button.dart';
 import 'package:love_cooking_app/src/constants/app_sizes.dart';
@@ -31,20 +32,21 @@ class FilterBottomSheet extends StatelessWidget {
             ),
             gapH16,
             CustomTextButton(
-                text: 'Reset filters'.hardcoded,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge!
-                    .copyWith(color: Colors.red),
-                onPressed: () {
-                  // TODO: reset button logic
-                }),
+              text: 'Reset filters'.hardcoded,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyLarge!
+                  .copyWith(color: Colors.red),
+              onPressed: () => showNotImplementedAlertDialog(context: context),
+            ),
+            // TODO: reset button logic
+
             gapH12,
             PrimaryButton(
               text: 'Apply'.hardcoded,
-              onPressed: () {
-                // TODO: apply filters
-              },
+              onPressed:
+                  // TODO: apply filters
+                  () => showNotImplementedAlertDialog(context: context),
             ),
             gapH32,
           ],

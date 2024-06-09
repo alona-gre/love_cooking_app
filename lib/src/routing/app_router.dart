@@ -3,7 +3,7 @@ import 'package:love_cooking_app/src/features/authentication/presentation/accoun
 import 'package:love_cooking_app/src/features/authentication/presentation/sign_in/email_password_sign_in_form_type.dart';
 import 'package:love_cooking_app/src/features/authentication/presentation/sign_in/email_password_sign_in_screen.dart';
 import 'package:love_cooking_app/src/features/collection/presentation/collection/collection_screen.dart';
-import 'package:love_cooking_app/src/features/recipes/presentation/recipe_screen.dart';
+import 'package:love_cooking_app/src/features/recipes/presentation/recipe_screen/recipe_screen.dart';
 import 'package:love_cooking_app/src/features/recipes/presentation/recipes_list/recipes_home_screen.dart';
 import 'package:love_cooking_app/src/routing/go_router_refresh_stream.dart';
 import 'package:love_cooking_app/src/routing/not_found_screen.dart';

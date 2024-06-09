@@ -50,15 +50,6 @@ class CollectionItemsBuilder extends StatelessWidget {
               ),
             ),
             gapW16,
-            //TODO: delete
-            // Flexible(
-            //   // use 1 flex unit for the checkout button
-            //   flex: 1,
-            //   child: Padding(
-            //     padding: const EdgeInsets.symmetric(vertical: Sizes.p16),
-            //     child: CartTotalWithCTA(ctaBuilder: ctaBuilder),
-            //   ),
-            // )
           ],
         ),
       );

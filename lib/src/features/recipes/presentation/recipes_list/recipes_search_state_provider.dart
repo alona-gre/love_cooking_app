@@ -1,4 +1,4 @@
-import 'package:love_cooking_app/src/features/recipes/data/fake_recipes_repository.dart';
+import 'package:love_cooking_app/src/features/recipes/data/local/fake_recipes_repository.dart';
 import 'package:love_cooking_app/src/features/recipes/domain/recipe.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
