@@ -16,7 +16,7 @@ class HomeAppBar extends ConsumerWidget implements PreferredSizeWidget {
 
     final currentPage = ref.read(goRouterProvider);
     bool isHomePage =
-        currentPage.routeInformationProvider.value.uri.toString() == '/';
+        currentPage.routeInformationProvider.value.uri.path == '/';
     // final String userName = user?.displayName ?? 'Guest';
 
     return AppBar(
@@ -26,15 +26,16 @@ class HomeAppBar extends ConsumerWidget implements PreferredSizeWidget {
               onPressed: () => Scaffold.of(context).openDrawer(),
             )
           : null,
-      title: Text(user != null ? 'Hi, Username' : 'Hi'),
+      title: Text(user != null ? 'Hi, Username' : 'Hi, Guest'),
       centerTitle: false,
       actions: [
         const CollectionIcon(),
-        IconButton(
-          key: const Key('filters'),
-          icon: const Icon(Icons.tune),
-          onPressed: () => showFilterBottomSheet(context),
-        ),
+        if (isHomePage || isHomePage && user != null)
+          IconButton(
+            key: const Key('filters'),
+            icon: const Icon(Icons.tune),
+            onPressed: () => showFilterBottomSheet(context),
+          ),
       ],
     );
   }

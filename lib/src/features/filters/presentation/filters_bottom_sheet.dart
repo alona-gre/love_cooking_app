@@ -12,14 +12,22 @@ class FilterBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        padding: const EdgeInsets.all(16.0),
+        width: MediaQuery.of(context).size.width,
+        // padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
             const SizedBox(height: 16.0),
             const FilterChipsRow(
-              filterTitle: 'Courses',
-              chipLabels: ['Breakfast', 'Lunch', 'Dinner', 'Dessert'],
+              filterTitle: 'Categories',
+              chipLabels: [
+                'Breakfast',
+                'Lunch',
+                'Dinner',
+                'Dessert',
+                'Snack',
+                'Beverage'
+              ],
             ),
             gapH16,
             const FilterChipsRow(

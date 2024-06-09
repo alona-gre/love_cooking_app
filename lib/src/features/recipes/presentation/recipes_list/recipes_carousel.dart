@@ -76,11 +76,11 @@ class RecipesCarouselSlider extends StatelessWidget {
         );
       },
       options: CarouselOptions(
-        height: 380.0,
+        height: 360.0,
         enlargeCenterPage: false,
         autoPlay: false,
         aspectRatio: 16 / 9,
-        viewportFraction: (screenWidth < Breakpoint.tablet) ? 0.8 : 0.4,
+        viewportFraction: (screenWidth < Breakpoint.tablet) ? 1 : 0.4,
       ),
     );
   }

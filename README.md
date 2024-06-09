@@ -2,9 +2,22 @@
 
 This is a demo love_cooking App.
 
-It includes a full-stack love_cooking app using Flutter & Firebase:
+It includes a full-stack love_cooking app using Flutter & Firebase.
 
-![love_cooking App Preview](/.github/images/love_cooking-app-preview.png)
+## Demo
+[![Watch the video](https://img.youtube.com/vi/2VbvOIFcZ6I/maxresdefault.jpg)](https://www.youtube.com/watch?v=2VbvOIFcZ6I)
+
+## Features
+- Responsive UI
+- Authentication
+- Saving recipes to collections
+- Servings quantity selector
+- Search 
+- Firebase integration (not available yet)
+- Filtering by categories (not available yet)
+- Daily meals planner (not available yet)
+- Shopping list (not available yet)
+
 
 
 ## Project Setup
