@@ -4,7 +4,7 @@ This is a demo love_cooking App.
 
 It includes a full-stack love_cooking app using Flutter & Firebase.
 
-## Demo
+## Demo Video (click the picture)
 [![Watch the video](https://img.youtube.com/vi/2VbvOIFcZ6I/maxresdefault.jpg)](https://www.youtube.com/watch?v=2VbvOIFcZ6I)
 
 ## Features
