@@ -32,15 +32,17 @@ class DrawerMenu extends ConsumerWidget {
                 backgroundColor: Colors.grey,
               )),
           ListTile(
-            leading: const Icon(Icons.account_circle),
-            title: Text(user != null ? 'Profile' : 'Log In'),
-            onTap: () => user != null
-                ? {
-                    Scaffold.of(context).closeDrawer(),
-                    context.goNamed(AppRoute.account.name),
-                  }
-                : context.goNamed(AppRoute.signIn.name), // Login route
-          ),
+              leading: const Icon(Icons.account_circle),
+              title: Text(user != null ? 'Profile' : 'Log In'),
+              onTap: () => user != null
+                  ? {
+                      Scaffold.of(context).closeDrawer(),
+                      context.goNamed(AppRoute.account.name),
+                    }
+                  : {
+                      Scaffold.of(context).closeDrawer(),
+                      context.goNamed(AppRoute.signIn.name),
+                    }),
           if (user != null)
             ListTile(
               leading: const Icon(Icons.card_membership),
@@ -75,6 +77,7 @@ class DrawerMenu extends ConsumerWidget {
                 );
                 if (logout == true) {
                   ref.read(accountScreenControllerProvider.notifier).signOut();
+                  Scaffold.of(context).closeDrawer();
                 }
               },
             )

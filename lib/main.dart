@@ -17,25 +17,17 @@ void main() async {
   usePathUrlStrategy();
   // * Register error handlers. For more info, see:
   // * https://docs.flutter.dev/testing/errors
-  // final localCartRepository = await SembastCartRepository.makeDefault();
-  // final localWishlistRepository = await SembastWishlistRepository.makeDefault();
   final localCollectionRepository =
       await SembastCollectionRepository.makeDefault();
   // * Create ProviderContainer with any required overrides
   final container = ProviderContainer(
     overrides: [
-      // localCartRepositoryProvider.overrideWithValue(localCartRepository),
-      // localWishlistRepositoryProvider
-      //     .overrideWithValue(localWishlistRepository),
       localCollectionRepositoryProvider
           .overrideWithValue(localCollectionRepository),
     ],
     observers: [AsyncErrorLogger()],
   );
-  // // * Initialize CartSyncService to start the listener
-  // container.read(cartSyncServiceProvider);
-  // // * Initialize WishlistSyncService to start the listener
-  // container.read(wishlistSyncServiceProvider);
+
   // * Initialize CollectionSyncService to start the listener
   container.read(collectionSyncServiceProvider);
   final errorLogger = container.read(errorLoggerProvider);

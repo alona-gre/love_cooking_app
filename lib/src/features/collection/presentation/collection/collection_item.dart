@@ -1,5 +1,5 @@
 import 'package:love_cooking_app/src/common_widgets/error_message_widget.dart';
-import 'package:love_cooking_app/src/common_widgets/shimmer_loading_cart_items_list.dart';
+import 'package:love_cooking_app/src/common_widgets/shimmer_loading_recipe_card.dart';
 import 'package:love_cooking_app/src/features/recipes/data/local/fake_recipes_repository.dart';
 import 'package:love_cooking_app/src/features/collection/domain/collection_item.dart';
 import 'package:love_cooking_app/src/features/collection/presentation/collection/remove_from_collection_screen_widget.dart';
@@ -26,28 +26,28 @@ class CollectionItemWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final recipeValue = ref.watch(recipeProvider(collectionItem.recipeId));
     return recipeValue.when(
-        data: (recipe) => InkWell(
-              onTap: () => context.pushNamed(
-                AppRoute.recipe.name,
-                pathParameters: {'id': recipe.id},
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: Sizes.p8),
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(Sizes.p16),
-                    child: CollectionItemContents(
-                      recipe: recipe!,
-                      collectionItem: collectionItem,
-                      itemIndex: itemIndex,
-                    ),
-                  ),
-                ),
+      data: (recipe) => InkWell(
+        onTap: () => context.pushNamed(
+          AppRoute.recipe.name,
+          pathParameters: {'id': recipe.id},
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: Sizes.p8),
+          child: Card(
+            child: Padding(
+              padding: const EdgeInsets.all(Sizes.p16),
+              child: CollectionItemContents(
+                recipe: recipe!,
+                collectionItem: collectionItem,
+                itemIndex: itemIndex,
               ),
             ),
-        error: (e, st) => Center(child: ErrorMessageWidget(e.toString())),
-        loading: () =>
-            const ShimmerLoadingCartItem(height: 220.0, margin: 16.0));
+          ),
+        ),
+      ),
+      error: (e, st) => Center(child: ErrorMessageWidget(e.toString())),
+      loading: () => const ShimmerLoadingRecipeCard(),
+    );
   }
 }
 

@@ -14,10 +14,9 @@ class HomeAppBar extends ConsumerWidget implements PreferredSizeWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(authStateChangesProvider).value;
 
-    final currentPage = ref.read(goRouterProvider);
+    final currentPage = ref.watch(goRouterProvider);
     bool isHomePage =
-        currentPage.routeInformationProvider.value.uri.path == '/';
-    // final String userName = user?.displayName ?? 'Guest';
+        currentPage.routerDelegate.currentConfiguration.fullPath == '/';
 
     return AppBar(
       leading: isHomePage
@@ -30,7 +29,7 @@ class HomeAppBar extends ConsumerWidget implements PreferredSizeWidget {
       centerTitle: false,
       actions: [
         const CollectionIcon(),
-        if (isHomePage || isHomePage && user != null)
+        if (isHomePage)
           IconButton(
             key: const Key('filters'),
             icon: const Icon(Icons.tune),

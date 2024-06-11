@@ -7,6 +7,7 @@ import 'package:love_cooking_app/src/common_widgets/home_app_bar.dart';
 import 'package:love_cooking_app/src/common_widgets/responsive_center.dart';
 import 'package:love_cooking_app/src/common_widgets/responsive_two_column_layout.dart';
 import 'package:love_cooking_app/src/constants/app_sizes.dart';
+import 'package:love_cooking_app/src/constants/breakpoints.dart';
 import 'package:love_cooking_app/src/features/collection/presentation/add_to_collection/add_to_collection_controller.dart';
 import 'package:love_cooking_app/src/features/collection/presentation/add_to_collection/add_to_collection_widget.dart';
 import 'package:love_cooking_app/src/features/recipes/data/local/fake_recipes_repository.dart';
@@ -75,61 +76,71 @@ class RecipePreview extends ConsumerWidget {
     //   (_, state) => state.showAlertDialogOnError(context),
     // );
 
+    final screenWidth = MediaQuery.of(context).size.width;
     return ResponsiveTwoColumnLayout(
       startContent: CustomImage(imageUrl: recipe.imageUrl),
       spacing: Sizes.p16,
-      endContent: Padding(
-        padding: const EdgeInsets.all(Sizes.p16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  recipe.title,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineMedium!
-                      .copyWith(color: Colors.white),
-                ),
-                gapH8,
-                Text(
-                  recipe.description,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium!
-                      .copyWith(color: Colors.white),
-                ),
-              ],
-            ),
-            gapH32,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.schedule,
-                      color: Colors.white,
+      endContent: SizedBox(
+        height: screenWidth >= Breakpoint.tablet ? 300 : null,
+        child: Padding(
+          padding: const EdgeInsets.all(Sizes.p16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    recipe.title,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineMedium!
+                        .copyWith(color: Colors.white),
+                  ),
+                  gapH8,
+                  Text(
+                    recipe.description,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(color: Colors.white),
+                  ),
+                ],
+              ),
+              gapH16,
+              if (screenWidth >= Breakpoint.tablet) const Spacer(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.schedule,
+                          color: Colors.white,
+                        ),
+                        gapW4,
+                        Flexible(
+                          child: Text(
+                            '${recipe.duration} min',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(color: Colors.white),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
                     ),
-                    gapW4,
-                    Text(
-                      '${recipe.duration} min',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium!
-                          .copyWith(color: Colors.white),
-                    ),
-                  ],
-                ),
-                AddToCollectionWidget(recipe: recipe),
-                // TODO: AddToPlannerWidget(recipe: recipe),
-              ],
-            ),
-            gapH8,
-          ],
+                  ),
+                  AddToCollectionWidget(recipe: recipe),
+                  // TODO: AddToPlannerWidget(recipe: recipe),
+                ],
+              ),
+              gapH8,
+            ],
+          ),
         ),
       ),
     );
@@ -240,8 +251,7 @@ class _IngredientRowState extends State<IngredientRow> {
                 child: Text(
                   widget.ingredient.name,
                   style: Theme.of(context).textTheme.bodyLarge,
-                  overflow: TextOverflow.visible,
-                  maxLines: null, // Allow the text to take multiple lines
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
               Checkbox(
