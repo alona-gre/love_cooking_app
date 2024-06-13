@@ -1,62 +1,11 @@
-import 'package:love_cooking_app/src/features/recipes/domain/category.dart';
 import 'package:love_cooking_app/src/features/recipes/domain/ingredient.dart';
 import 'package:love_cooking_app/src/features/recipes/domain/recipe.dart';
-
-const availableCategories = [
-  Category(
-    id: 'c1',
-    title: 'Italian',
-  ),
-  Category(
-    id: 'c2',
-    title: 'Quick & Easy',
-  ),
-  Category(
-    id: 'c3',
-    title: 'Hamburgers',
-  ),
-  Category(
-    id: 'c4',
-    title: 'German',
-  ),
-  Category(
-    id: 'c5',
-    title: 'Light & Lovely',
-  ),
-  Category(
-    id: 'c6',
-    title: 'Exotic',
-  ),
-  Category(
-    id: 'c7',
-    title: 'Breakfast',
-  ),
-  Category(
-    id: 'c8',
-    title: 'Asian',
-  ),
-  Category(
-    id: 'c9',
-    title: 'French',
-  ),
-  Category(
-    id: 'c10',
-    title: 'Summer',
-  ),
-  Category(
-    id: 'c11',
-    title: 'Sandwiches',
-  ),
-];
 
 /// Test recipes to be used until a data source is implemented
 const kTestRecipes = [
   Recipe(
     id: 'r1',
-    categories: [
-      'dinner',
-      'c2',
-    ],
+    categories: ['dinner', 'quick & easy', 'italian'],
     title: 'Spaghetti with Tomato Sauce',
     imageUrl:
         'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg/800px-Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg',
@@ -79,7 +28,6 @@ const kTestRecipes = [
       'The sauce will be done once the spaghetti are.',
       'Feel free to add some cheese on top of the finished dish.'
     ],
-    isGlutenFree: false,
     isVegan: true,
     isVegetarian: true,
     isLactoseFree: true,
@@ -88,7 +36,7 @@ const kTestRecipes = [
   ),
   Recipe(
     id: 'r2',
-    categories: ['c2', 'c11'],
+    categories: ['exotic', 'sandwiches', 'lunch'],
     title: 'Toast Hawaii',
     imageUrl:
         'https://cdn.pixabay.com/photo/2018/07/11/21/51/toast-3532016_1280.jpg',
@@ -106,18 +54,15 @@ const kTestRecipes = [
       'Layer ham, the pineapple and cheese on the white bread',
       'Bake the toast for round about 10 minutes in the oven at 200°C'
     ],
-    isGlutenFree: false,
-    isVegan: false,
-    isVegetarian: false,
-    isLactoseFree: false,
     description:
         'A fun and unexpected twist on toast, featuring ham, pineapple, and cheese melted together for a sweet and savory combination.',
   ),
   Recipe(
     id: 'r3',
     categories: [
-      'c2',
-      'c3',
+      'hamburgers',
+      'dinner',
+      'lunch',
     ],
     portion: 2,
     title: 'Classic Hamburger',
@@ -139,9 +84,6 @@ const kTestRecipes = [
       'Bruch buns with ketchup',
       'Serve burger with tomato, cucumber and onion'
     ],
-    isGlutenFree: false,
-    isVegan: false,
-    isVegetarian: false,
     isLactoseFree: true,
     description:
         'A satisfying all-American staple, this juicy burger is layered with your favorite toppings on a toasted bun.',
@@ -149,7 +91,9 @@ const kTestRecipes = [
   Recipe(
     id: 'r4',
     categories: [
-      'c4',
+      'german',
+      'dinner',
+      'lunch',
     ],
     title: 'Wiener Schnitzel',
     imageUrl:
@@ -175,19 +119,15 @@ const kTestRecipes = [
       'Remove, and drain on kitchen paper. Fry the parsley in the remaining oil and drain.',
       'Place the schnitzels on awarmed plate and serve garnishedwith parsley and slices of lemon.'
     ],
-    isGlutenFree: false,
-    isVegan: false,
-    isVegetarian: false,
-    isLactoseFree: false,
     description:
         'A crispy and flavorful Austrian dish, this veal cutlet is breaded and fried to golden perfection.',
   ),
   Recipe(
     id: 'r5',
     categories: [
-      'c2'
-          'c5',
-      'c10',
+      'light'
+          'lunch',
+      'dinner',
     ],
     title: 'Salad with Smoked Salmon',
     imageUrl:
@@ -213,7 +153,6 @@ const kTestRecipes = [
       'Add salmon cubes and dressing'
     ],
     isGlutenFree: true,
-    isVegan: false,
     isVegetarian: true,
     isLactoseFree: true,
     description:
@@ -222,8 +161,8 @@ const kTestRecipes = [
   Recipe(
     id: 'r6',
     categories: [
-      'c6',
-      'c10',
+      'dessert',
+      'light',
     ],
     title: 'Delicious Orange Mousse',
     imageUrl:
@@ -249,17 +188,16 @@ const kTestRecipes = [
       'Cool down again for at least 4 hours',
       'Serve with orange peel',
     ],
-    isGlutenFree: true,
-    isVegan: false,
     isVegetarian: true,
-    isLactoseFree: false,
     description:
         'A decadent and delightful dessert, this orange mousse is light and airy with a refreshing citrusy taste.',
   ),
   Recipe(
     id: 'r7',
     categories: [
-      'c7',
+      'breakfast'
+          'quick & easy',
+      'lunch'
     ],
     title: 'Pancakes',
     imageUrl:
@@ -282,16 +220,16 @@ const kTestRecipes = [
       'Pour or scoop the batter onto the griddle, using approximately 1/4 cup for each pancake. Brown on both sides and serve hot.'
     ],
     isGlutenFree: true,
-    isVegan: false,
     isVegetarian: true,
-    isLactoseFree: false,
     description:
         'Fluffy and delicious, these pancakes are perfect for a satisfying breakfast or brunch.',
   ),
   Recipe(
     id: 'r8',
     categories: [
-      'c8',
+      'asian',
+      'dinner',
+      'lunch',
     ],
     title: 'Creamy Indian Chicken Curry',
     imageUrl:
@@ -316,17 +254,13 @@ const kTestRecipes = [
       'Serve with rice'
     ],
     isGlutenFree: true,
-    isVegan: false,
-    isVegetarian: false,
     isLactoseFree: true,
     description:
         'A flavorful and aromatic dish, this chicken curry is simmered in a creamy sauce packed with Indian spices.',
   ),
   Recipe(
     id: 'r9',
-    categories: [
-      'c9',
-    ],
+    categories: ['dessert', 'exotic'],
     title: 'Chocolate Souffle',
     imageUrl:
         'https://cdn.pixabay.com/photo/2014/08/07/21/07/souffle-412785_1280.jpg',
@@ -369,18 +303,16 @@ const kTestRecipes = [
       'Bake in preheated oven until scuffles are puffed and have risen above the top of the rims, 12 to 15 minutes.',
     ],
     isGlutenFree: true,
-    isVegan: false,
     isVegetarian: true,
-    isLactoseFree: false,
     description:
         'A luxurious and impressive dessert, this chocolate souffle is light and airy with a rich chocolate flavor.',
   ),
   Recipe(
     id: 'r10',
     categories: [
-      'c2',
-      'c5',
-      'c10',
+      'light',
+      'lunch',
+      'dinner',
     ],
     title: 'Asparagus Salad with Cherry Tomatoes',
     imageUrl:

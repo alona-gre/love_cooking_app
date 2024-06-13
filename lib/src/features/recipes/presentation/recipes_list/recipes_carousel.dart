@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:love_cooking_app/src/common_widgets/async_value_widget.dart';
 import 'package:love_cooking_app/src/constants/breakpoints.dart';
+import 'package:love_cooking_app/src/features/recipes/data/local/fake_recipes_repository.dart';
 import 'package:love_cooking_app/src/features/recipes/domain/recipe.dart';
 import 'package:love_cooking_app/src/features/recipes/presentation/recipes_list/recipe_card.dart';
 import 'package:love_cooking_app/src/features/recipes/presentation/recipes_list/recipes_search_state_provider.dart';
@@ -22,9 +23,11 @@ class RecipesCarousel extends ConsumerWidget {
       updateCollectionFromHomeScreenControllerProvider,
       (_, state) => state.showAlertDialogOnError(context),
     );
-    final recipesListValue = ref.watch(recipesSearchResultsProvider);
+    // final recipesListValue = ref.watch(recipesSearchResultsProvider);
+    // TODO: re-enable search
+    final filteredRecipesListValue = ref.watch(filteredRecipesProvider);
     return AsyncValueWidget<List<Recipe>>(
-      value: recipesListValue,
+      value: filteredRecipesListValue,
       data: (recipes) => recipes.isEmpty
           ? Center(
               child: Text(

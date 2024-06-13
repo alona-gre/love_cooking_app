@@ -331,5 +331,22 @@ class _RecipesListSearchProviderElement
   @override
   String get query => (origin as RecipesListSearchProvider).query;
 }
+
+String _$filteredRecipesHash() => r'b6708970d38b06044b9d09222367d92b0318e154';
+
+/// See also [filteredRecipes].
+@ProviderFor(filteredRecipes)
+final filteredRecipesProvider =
+    AutoDisposeFutureProvider<List<Recipe>>.internal(
+  filteredRecipes,
+  name: r'filteredRecipesProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$filteredRecipesHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef FilteredRecipesRef = AutoDisposeFutureProviderRef<List<Recipe>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

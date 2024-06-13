@@ -1,42 +1,73 @@
 import 'package:flutter/material.dart';
-import 'package:love_cooking_app/src/common_widgets/alert_dialogs.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:love_cooking_app/src/common_widgets/custom_text_button.dart';
-import 'package:love_cooking_app/src/common_widgets/primary_button.dart';
 import 'package:love_cooking_app/src/constants/app_sizes.dart';
+import 'package:love_cooking_app/src/features/filters/presentation/filters_controller.dart';
 import 'package:love_cooking_app/src/localization/string_hardcoded.dart';
 
-class FilterBottomSheet extends StatelessWidget {
+class FilterBottomSheet extends ConsumerWidget {
   const FilterBottomSheet({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // TODO  final chosenFilters = ref.watch(filtersProvider);
     return SingleChildScrollView(
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width,
-        // padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
             const SizedBox(height: 16.0),
-            const FilterChipsRow(
+            const CategoryFilterChipsRow(
               filterTitle: 'Categories',
-              chipLabels: [
-                'Breakfast',
-                'Lunch',
-                'Dinner',
-                'Dessert',
-                'Snack',
-                'Beverage'
+              filters: [
+                Filter.breakfast,
+                Filter.lunch,
+                Filter.dinner,
+                Filter.dessert,
+                Filter.italian,
+                Filter.quickEasy,
+                Filter.hamburgers,
+                Filter.german,
+                Filter.exotic,
+                Filter.light,
+                Filter.asian,
+                Filter.french,
+                Filter.summer,
+                Filter.sandwiches,
               ],
+              filterLabels: {
+                Filter.breakfast: 'Breakfast',
+                Filter.lunch: 'Lunch',
+                Filter.dinner: 'Dinner',
+                Filter.dessert: 'Dessert',
+                Filter.italian: 'Italian',
+                Filter.quickEasy: 'Quick&Easy',
+                Filter.hamburgers: 'Hamburgers',
+                Filter.german: 'German',
+                Filter.exotic: 'Exotic',
+                Filter.light: 'Lunch',
+                Filter.asian: 'Asian',
+                Filter.french: 'French',
+                Filter.summer: 'Summer',
+                Filter.sandwiches: 'Sandwiches',
+              },
             ),
             gapH16,
-            const FilterChipsRow(
+            const DietFilterChipsRow(
               filterTitle: 'Diets',
-              chipLabels: [
-                'Lactose-free',
-                'Gluten-free',
-                'Vegetarian',
+              filters: [
+                Filter.lactoseFree,
+                Filter.glutenFree,
+                Filter.vegetarian,
+                Filter.vegan,
               ],
+              filterLabels: {
+                Filter.lactoseFree: 'Lactose-free',
+                Filter.glutenFree: 'Gluten-free',
+                Filter.vegetarian: 'Vegetarian',
+                Filter.vegan: 'Vegan',
+              },
             ),
             gapH16,
             CustomTextButton(
@@ -45,17 +76,18 @@ class FilterBottomSheet extends StatelessWidget {
                   .textTheme
                   .bodyLarge!
                   .copyWith(color: Colors.red),
-              onPressed: () => showNotImplementedAlertDialog(context: context),
+              onPressed: () {
+                ref.read(filtersProvider.notifier).resetFilters();
+              },
             ),
-            // TODO: reset button logic
-
-            gapH12,
-            PrimaryButton(
-              text: 'Apply'.hardcoded,
-              onPressed:
-                  // TODO: apply filters
-                  () => showNotImplementedAlertDialog(context: context),
-            ),
+            // gapH12,
+            // PrimaryButton(
+            //   text: 'Save'.hardcoded,
+            //   onPressed: () {
+            //     ref.read(filtersProvider.notifier).saveFilters(chosenFilters);
+            //     Navigator.pop(context);
+            //   },
+            // ),
             gapH32,
           ],
         ),
@@ -74,25 +106,28 @@ void showFilterBottomSheet(BuildContext context) {
   );
 }
 
-class FilterChipsRow extends StatefulWidget {
+class CategoryFilterChipsRow extends ConsumerStatefulWidget {
   final String filterTitle;
-  final List<String> chipLabels;
+  final List<Filter> filters;
+  final Map<Filter, String> filterLabels;
 
-  const FilterChipsRow({
+  const CategoryFilterChipsRow({
     super.key,
     required this.filterTitle,
-    required this.chipLabels,
+    required this.filters,
+    required this.filterLabels,
   });
 
   @override
-  _FilterChipsRowState createState() => _FilterChipsRowState();
+  CategoryFilterChipsRowState createState() => CategoryFilterChipsRowState();
 }
 
-class _FilterChipsRowState extends State<FilterChipsRow> {
-  final Set<String> _selectedChips = {};
-
+class CategoryFilterChipsRowState
+    extends ConsumerState<CategoryFilterChipsRow> {
   @override
   Widget build(BuildContext context) {
+    final activeFilters = ref.watch(filtersProvider);
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -106,18 +141,68 @@ class _FilterChipsRowState extends State<FilterChipsRow> {
           Wrap(
             spacing: 8.0,
             runSpacing: 8.0,
-            children: widget.chipLabels.map((label) {
+            children: widget.filters.map((filter) {
+              final label = widget.filterLabels[filter] ?? filter.toString();
               return ChoiceChip(
                 label: Text(label),
-                selected: _selectedChips.contains(label),
+                selected: activeFilters[filter] ?? false,
                 onSelected: (selected) {
-                  setState(() {
-                    if (selected) {
-                      _selectedChips.add(label);
-                    } else {
-                      _selectedChips.remove(label);
-                    }
-                  });
+                  ref
+                      .read(filtersProvider.notifier)
+                      .setFilter(filter, selected);
+                },
+              );
+            }).toList(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class DietFilterChipsRow extends ConsumerStatefulWidget {
+  final String filterTitle;
+  final List<Filter> filters;
+  final Map<Filter, String> filterLabels;
+
+  const DietFilterChipsRow({
+    super.key,
+    required this.filterTitle,
+    required this.filters,
+    required this.filterLabels,
+  });
+
+  @override
+  DietFilterChipsRowState createState() => DietFilterChipsRowState();
+}
+
+class DietFilterChipsRowState extends ConsumerState<DietFilterChipsRow> {
+  @override
+  Widget build(BuildContext context) {
+    final activeFilters = ref.watch(filtersProvider);
+
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            widget.filterTitle,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          const SizedBox(height: 8.0),
+          Wrap(
+            spacing: 8.0,
+            runSpacing: 8.0,
+            children: widget.filters.map((filter) {
+              final label = widget.filterLabels[filter] ?? filter.toString();
+              return ChoiceChip(
+                label: Text(label),
+                selected: activeFilters[filter] ?? false,
+                onSelected: (selected) {
+                  ref
+                      .read(filtersProvider.notifier)
+                      .setFilter(filter, selected);
                 },
               );
             }).toList(),
