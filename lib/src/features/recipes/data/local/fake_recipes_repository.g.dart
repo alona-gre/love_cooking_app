@@ -332,21 +332,22 @@ class _RecipesListSearchProviderElement
   String get query => (origin as RecipesListSearchProvider).query;
 }
 
-String _$filteredRecipesHash() => r'b6708970d38b06044b9d09222367d92b0318e154';
+String _$filteredRecipesFutureHash() =>
+    r'cb84fda8e6c140313d1eea73918019beaa8d33a1';
 
-/// See also [filteredRecipes].
-@ProviderFor(filteredRecipes)
-final filteredRecipesProvider =
+/// See also [filteredRecipesFuture].
+@ProviderFor(filteredRecipesFuture)
+final filteredRecipesFutureProvider =
     AutoDisposeFutureProvider<List<Recipe>>.internal(
-  filteredRecipes,
-  name: r'filteredRecipesProvider',
+  filteredRecipesFuture,
+  name: r'filteredRecipesFutureProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$filteredRecipesHash,
+      : _$filteredRecipesFutureHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef FilteredRecipesRef = AutoDisposeFutureProviderRef<List<Recipe>>;
+typedef FilteredRecipesFutureRef = AutoDisposeFutureProviderRef<List<Recipe>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -35,7 +35,7 @@ GoRouter goRouter(GoRouterRef ref) {
           return '/';
         }
       } else {
-        if (path == '/account' || path == '/orders') {
+        if (path == '/account') {
           return '/';
         }
       }

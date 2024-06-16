@@ -37,9 +37,11 @@ class CollectionScreen extends ConsumerWidget {
                 collectionItem: item,
                 itemIndex: index,
               ),
+              // TODO: delete
               ctaBuilder: (_) => PrimaryButton(
                   text: 'Go to Cart'.hardcoded,
-                  //isLoading: state.isLoading,
+
+                  // isLoading: state.isLoading,
                   onPressed: () {}),
             ),
           );

@@ -23,13 +23,13 @@ class CollectionSyncService {
       final previousUser = previous?.value;
       final user = next.value;
       if (previousUser == null && user != null) {
-        _moveItemsToRemoteCart(user.uid);
+        _moveItemsToRemoteCollection(user.uid);
       }
     });
   }
 
   /// moves all items from the local to remote collection
-  void _moveItemsToRemoteCart(String uid) async {
+  void _moveItemsToRemoteCollection(String uid) async {
     try {
       // get the local collection data
       final localCollectionRepository =

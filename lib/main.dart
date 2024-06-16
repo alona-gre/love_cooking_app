@@ -4,6 +4,9 @@ import 'package:love_cooking_app/src/exceptions/error_logger.dart';
 import 'package:love_cooking_app/src/features/collection/application/collection_sync_service.dart';
 import 'package:love_cooking_app/src/features/collection/data/local/local_collection_repository.dart';
 import 'package:love_cooking_app/src/features/collection/data/local/sembast_collection_repository.dart';
+import 'package:love_cooking_app/src/features/filters/application/filtering_sync_service.dart';
+import 'package:love_cooking_app/src/features/filters/data/local/local_filtering_repository.dart';
+import 'package:love_cooking_app/src/features/filters/data/local/sembast_filtering_repository.dart';
 import 'package:love_cooking_app/src/localization/string_hardcoded.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -19,17 +22,23 @@ void main() async {
   // * https://docs.flutter.dev/testing/errors
   final localCollectionRepository =
       await SembastCollectionRepository.makeDefault();
+  final localFilteringRepository =
+      await SembastFilteringRepository.makeDefault();
   // * Create ProviderContainer with any required overrides
   final container = ProviderContainer(
     overrides: [
       localCollectionRepositoryProvider
           .overrideWithValue(localCollectionRepository),
+      localFilteringRepositoryProvider
+          .overrideWithValue(localFilteringRepository),
     ],
     observers: [AsyncErrorLogger()],
   );
 
   // * Initialize CollectionSyncService to start the listener
   container.read(collectionSyncServiceProvider);
+  // * Initialize FilteringSyncService to start the listener
+  container.read(filteringSyncServiceProvider);
   final errorLogger = container.read(errorLoggerProvider);
   // * Register error handlers. For more info, see:
   // * https://docs.flutter.dev/testing/errors
