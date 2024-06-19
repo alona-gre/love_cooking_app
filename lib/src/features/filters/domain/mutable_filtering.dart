@@ -34,9 +34,9 @@ extension MutableFiltering on Filtering {
     for (var item in filterItemsToAdd) {
       copy.update(
         item.filterName,
-        // if there is already a value, update it by adding the item quantity
-        (value) => item.isEnabled,
-        // otherwise, add the item with the given quantity
+        // if there is already a value, take it.
+        (value) => item.isEnabled ? true : value,
+        // otherwise, set the filter value which was saved locally
         ifAbsent: () => item.isEnabled,
       );
     }

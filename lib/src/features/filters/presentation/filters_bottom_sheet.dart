@@ -34,8 +34,7 @@ class FilterBottomSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final filters = ref.watch(filteringControllerProvider);
-    final userFilters = filters.value;
+    final userFilters = ref.watch(filteringControllerProvider).value;
 
     ref.listen<AsyncValue<void>>(
       filteringControllerProvider,
@@ -53,7 +52,7 @@ class FilterBottomSheet extends ConsumerWidget {
               filterLabels: userFilters!.filters.keys.toList(),
             ),
             gapH16,
-            // TODO later
+            // TODO add other filters
             // const DietFilterChipsRow(
             //   filterTitle: 'Diets',
             //   filters: [
@@ -84,7 +83,9 @@ class FilterBottomSheet extends ConsumerWidget {
             PrimaryButton(
               text: 'Save'.hardcoded,
               onPressed: () {
-                ref.read(filteringControllerProvider.notifier).saveFilters();
+                ref
+                    .read(filteringControllerProvider.notifier)
+                    .saveFilters(userFilters);
                 Navigator.pop(context);
               },
             ),
@@ -161,7 +162,7 @@ class CategoryFilterChipsRowState
   }
 }
 
-// TODO later
+// TODO add other filters
 // class DietFilterChipsRow extends ConsumerStatefulWidget {
 //   final String filterTitle;
 //   final List<Filter> filters;

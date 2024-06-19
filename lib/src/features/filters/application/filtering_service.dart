@@ -48,20 +48,21 @@ class FilteringService {
     await updateFiltering(updated);
   }
 
-  /// adds an item in the local or remote filtering depending on the user auth state
-  Future<void> addItem(FilterItem item) async {
-    final filtering = await fetchFiltering();
-    final updated = filtering.addFilter(item);
-    await updateFiltering(updated);
-  }
+  // TODO: implement filtering customization
+  // /// adds an item in the local or remote filtering depending on the user auth state
+  // Future<void> addItem(FilterItem item) async {
+  //   final filtering = await fetchFiltering();
+  //   final updated = filtering.addFilter(item);
+  //   await updateFiltering(updated);
+  // }
 
-  /// removes a filter item from the local or remote filtering depending on the user auth
-  /// state
-  Future<void> removeItemById(String filterName) async {
-    final filtering = await fetchFiltering();
-    final updated = filtering.removeItemByFilterName(filterName);
-    await updateFiltering(updated);
-  }
+  // /// removes a filter item from the local or remote filtering depending on the user auth
+  // /// state
+  // Future<void> removeItemByFilterName(String filterName) async {
+  //   final filtering = await fetchFiltering();
+  //   final updated = filtering.removeItemByFilterName(filterName);
+  //   await updateFiltering(updated);
+  // }
 }
 
 @Riverpod(keepAlive: true)

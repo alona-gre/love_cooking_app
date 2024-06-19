@@ -7,7 +7,7 @@ part of 'filtering_controller.dart';
 // **************************************************************************
 
 String _$filteringControllerHash() =>
-    r'd1971c00b76c40d8a9a8273fcca1e7a8dab19883';
+    r'2f33063e5f364e17ca4e8566715ce29ad96cdc3e';
 
 /// See also [FilteringController].
 @ProviderFor(FilteringController)

@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:love_cooking_app/src/features/filters/data/remote/remote_filtering_repository.dart';
 import 'package:love_cooking_app/src/features/filters/domain/filtering.dart';
 import 'package:love_cooking_app/src/features/filters/presentation/filters_bottom_sheet.dart';
@@ -16,16 +15,14 @@ class FakeRemoteFilteringRepository implements RemoteFilteringRepository {
 
   @override
   Future<Filtering> fetchFiltering(String uid) {
-    debugPrint(
-        'fetched Filtering: $uid,  ${_filterings.value[uid]}'.toString());
     return Future.value(
         _filterings.value[uid] ?? Filtering(availableCategoryFilters));
   }
 
   @override
   Stream<Filtering> watchFiltering(String uid) {
-    return _filterings.stream
-        .map((filteringData) => filteringData[uid] ?? const Filtering());
+    return _filterings.stream.map((filteringData) =>
+        filteringData[uid] ?? Filtering(availableCategoryFilters));
   }
 
   @override
@@ -37,7 +34,5 @@ class FakeRemoteFilteringRepository implements RemoteFilteringRepository {
     filterings[uid] = filtering;
     // Finally, update the filterings data (will emit a new value)
     _filterings.value = filterings;
-
-    debugPrint('updated Filtering: $uid,  ${_filterings.value}'.toString());
   }
 }

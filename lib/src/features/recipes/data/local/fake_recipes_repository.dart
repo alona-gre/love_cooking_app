@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:love_cooking_app/src/constants/test_recipes.dart';
+import 'package:love_cooking_app/src/features/filters/application/filtering_service.dart';
 import 'package:love_cooking_app/src/features/filters/domain/filtering.dart';
 import 'package:love_cooking_app/src/features/filters/presentation/filtering_controller/filtering_controller.dart';
-import 'package:love_cooking_app/src/features/filters/presentation/filters_bottom_sheet.dart';
 import 'package:love_cooking_app/src/features/recipes/domain/recipe.dart';
 import 'package:love_cooking_app/src/utils/delay.dart';
 import 'package:love_cooking_app/src/utils/in_memory_store.dart';
@@ -197,8 +197,9 @@ Future<List<Recipe>> recipesListSearch(
 @riverpod
 Future<List<Recipe>> filteredRecipesFuture(FilteredRecipesFutureRef ref) async {
   final recipesRepository = ref.watch(recipesRepositoryProvider);
+
   final filters = ref.watch(filteringControllerProvider).value ??
-      Filtering(availableCategoryFilters);
-  final filtererdRecipes = await recipesRepository.filterRecipesFuture(filters);
-  return filtererdRecipes;
+      await ref.watch(filteringServiceProvider).fetchFiltering();
+  final filteredRecipes = await recipesRepository.filterRecipesFuture(filters);
+  return filteredRecipes;
 }

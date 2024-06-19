@@ -12,10 +12,11 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'filtering_sync_service.g.dart';
 
 class FilteringSyncService {
+  final Ref ref;
+
   FilteringSyncService(this.ref) {
     _init();
   }
-  final Ref ref;
 
   void _init() {
     ref.listen<AsyncValue<AppUser?>>(authStateChangesProvider,
@@ -23,6 +24,7 @@ class FilteringSyncService {
       final previousUser = previous?.value;
       final user = next.value;
       if (previousUser == null && user != null) {
+        // TODO:
         _moveItemsToRemoteFiltering(user.uid);
       }
     });
@@ -41,6 +43,7 @@ class FilteringSyncService {
             ref.read(remoteFilteringRepositoryProvider);
         final remoteFiltering =
             await remoteFilteringRepository.fetchFiltering(uid);
+
         // add all the local filtering items to the remote filtering
         final updatedRemoteFiltering = remoteFiltering.addFilters(
           localFiltering.toItemsList(),

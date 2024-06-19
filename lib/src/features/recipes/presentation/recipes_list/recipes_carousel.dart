@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:love_cooking_app/src/common_widgets/async_value_widget.dart';
 import 'package:love_cooking_app/src/constants/breakpoints.dart';
+import 'package:love_cooking_app/src/features/authentication/data/fake_auth_repository.dart';
+import 'package:love_cooking_app/src/features/filters/presentation/filtering_controller/filtering_controller.dart';
 import 'package:love_cooking_app/src/features/recipes/data/local/fake_recipes_repository.dart';
 import 'package:love_cooking_app/src/features/recipes/domain/recipe.dart';
 import 'package:love_cooking_app/src/features/recipes/presentation/recipes_list/recipe_card.dart';
@@ -21,6 +23,15 @@ class RecipesCarousel extends ConsumerWidget {
     ref.listen<AsyncValue<void>>(
       updateCollectionFromHomeScreenControllerProvider,
       (_, state) => state.showAlertDialogOnError(context),
+    );
+    ref.listen<AsyncValue<void>>(
+      filteringControllerProvider,
+      (_, state) => state.showAlertDialogOnError(context),
+    );
+    // trigger the build method of FilteringController
+    ref.listen(
+      authStateChangesProvider,
+      (_, __) => ref.read(filteringControllerProvider.notifier).reloadState(),
     );
     // final recipesListValue = ref.watch(recipesSearchResultsProvider);
     // TODO: re-enable search

@@ -17,7 +17,6 @@ class AddToCollectionWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(addToCollectionControllerProvider);
-    // debugPrint(state.toString());
     final isFavorite = ref.watch(isFavoriteProvider(recipe.id));
 
     return AddToCollectionLightButton(

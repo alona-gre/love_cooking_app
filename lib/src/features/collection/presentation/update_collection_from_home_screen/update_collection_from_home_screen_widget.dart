@@ -17,7 +17,6 @@ class UpdateCollectionFromHomeScreenWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(updateCollectionFromHomeScreenControllerProvider);
-    // debugPrint(state.toString());
     final isFavorite = ref.watch(isFavoriteProvider(recipe.id));
 
     return AddToCollectionDarkButton(

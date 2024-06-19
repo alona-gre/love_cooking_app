@@ -76,8 +76,12 @@ class DrawerMenu extends ConsumerWidget {
                   defaultActionText: 'Logout'.hardcoded,
                 );
                 if (logout == true) {
-                  ref.read(accountScreenControllerProvider.notifier).signOut();
-                  Scaffold.of(context).closeDrawer();
+                  ref
+                      .read(accountScreenControllerProvider.notifier)
+                      .signOut()
+                      .then(
+                        (_) => Scaffold.of(context).closeDrawer(),
+                      );
                 }
               },
             )
@@ -86,3 +90,14 @@ class DrawerMenu extends ConsumerWidget {
     );
   }
 }
+
+
+ 
+
+
+
+
+  //                   ref.listen(
+  //   authStateChangesProvider,
+  //   (_, next) => ref.read(filteringControllerProvider.notifier).reloadState(),
+  // );

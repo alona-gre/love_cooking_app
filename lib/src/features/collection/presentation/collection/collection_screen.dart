@@ -37,7 +37,7 @@ class CollectionScreen extends ConsumerWidget {
                 collectionItem: item,
                 itemIndex: index,
               ),
-              // TODO: delete
+              // TODO: remove the button
               ctaBuilder: (_) => PrimaryButton(
                   text: 'Go to Cart'.hardcoded,
 
