@@ -1,14 +1,15 @@
-import 'package:love_cooking_app/src/features/filters/data/remote/remote_filtering_repository.dart';
+import 'package:love_cooking_app/src/constants/test_filters.dart';
+import 'package:love_cooking_app/src/features/filters/data/remote/diet/remote_diet_filtering_repository.dart';
 import 'package:love_cooking_app/src/features/filters/domain/filtering.dart';
-import 'package:love_cooking_app/src/features/filters/presentation/filters_bottom_sheet.dart';
 import 'package:love_cooking_app/src/utils/delay.dart';
 import 'package:love_cooking_app/src/utils/in_memory_store.dart';
 
-class FakeRemoteFilteringRepository implements RemoteFilteringRepository {
-  FakeRemoteFilteringRepository({this.addDelay = true});
+class FakeRemoteDietFilteringRepository
+    implements RemoteDietFilteringRepository {
+  FakeRemoteDietFilteringRepository({this.addDelay = true});
   final bool addDelay;
 
-  /// An InMemoryStore containing the shopping filtering data for all users, where:
+  /// An InMemoryStore containing the diet filtering data for all users, where:
   /// key: uid of the user
   /// value: Filtering of that user
   final _filterings = InMemoryStore<Map<String, Filtering>>({});
@@ -16,13 +17,13 @@ class FakeRemoteFilteringRepository implements RemoteFilteringRepository {
   @override
   Future<Filtering> fetchFiltering(String uid) {
     return Future.value(
-        _filterings.value[uid] ?? Filtering(availableCategoryFilters));
+        _filterings.value[uid] ?? const Filtering(availableDietFilters));
   }
 
   @override
   Stream<Filtering> watchFiltering(String uid) {
     return _filterings.stream.map((filteringData) =>
-        filteringData[uid] ?? Filtering(availableCategoryFilters));
+        filteringData[uid] ?? const Filtering(availableDietFilters));
   }
 
   @override

@@ -1,14 +1,14 @@
 import 'package:flutter/foundation.dart';
-import 'package:love_cooking_app/src/features/filters/data/local/local_filtering_repository.dart';
+import 'package:love_cooking_app/src/constants/test_filters.dart';
+import 'package:love_cooking_app/src/features/filters/data/local/diet/local_diet_filtering_repository.dart';
 import 'package:love_cooking_app/src/features/filters/domain/filtering.dart';
-import 'package:love_cooking_app/src/features/filters/presentation/filters_bottom_sheet.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 import 'package:sembast_web/sembast_web.dart';
 
-class SembastFilteringRepository implements LocalFilteringRepository {
-  SembastFilteringRepository(this.db);
+class SembastDietFilteringRepository implements LocalDietFilteringRepository {
+  SembastDietFilteringRepository(this.db);
   final Database db;
   final store = StoreRef.main();
 
@@ -21,11 +21,11 @@ class SembastFilteringRepository implements LocalFilteringRepository {
     }
   }
 
-  static Future<SembastFilteringRepository> makeDefault() async {
-    return SembastFilteringRepository(await createDatabase('default.db'));
+  static Future<SembastDietFilteringRepository> makeDefault() async {
+    return SembastDietFilteringRepository(await createDatabase('default.db'));
   }
 
-  static const filteringItemsKey = 'filteringItems';
+  static const filteringItemsKey = 'dietFilteringItems';
 
   @override
   Future<Filtering> fetchFiltering() async {
@@ -34,7 +34,7 @@ class SembastFilteringRepository implements LocalFilteringRepository {
     if (filteringJson != null) {
       return Filtering.fromJson(filteringJson);
     } else {
-      return Filtering(availableCategoryFilters);
+      return const Filtering(availableDietFilters);
     }
   }
 

@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Collection screen showing the items in the collection (editable)
-/// with a button to go to Cart.
 class CollectionScreen extends ConsumerWidget {
   const CollectionScreen({super.key});
 

@@ -8,7 +8,7 @@ class FakeRemoteCollectionRepository implements RemoteCollectionRepository {
 
   FakeRemoteCollectionRepository({this.addDelay = true});
 
-  /// An InMemoryStore containing the shopping cart data for all users, where:
+  /// An InMemoryStore containing the shopping collection data for all users, where:
   /// key: uid of the user,
   /// value: Collection of that user
   final _collections = InMemoryStore<Map<String, Collection>>({});

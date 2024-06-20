@@ -1,16 +1,18 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:love_cooking_app/src/features/authentication/data/fake_auth_repository.dart';
-import 'package:love_cooking_app/src/features/filters/data/local/local_filtering_repository.dart';
-import 'package:love_cooking_app/src/features/filters/data/remote/remote_filtering_repository.dart';
+import 'package:love_cooking_app/src/features/filters/data/local/category/local_category_filtering_repository.dart';
+
+import 'package:love_cooking_app/src/features/filters/data/remote/category/remote_category_filtering_repository.dart';
+
 import 'package:love_cooking_app/src/features/filters/domain/filter_item.dart';
 import 'package:love_cooking_app/src/features/filters/domain/filtering.dart';
 import 'package:love_cooking_app/src/features/filters/domain/mutable_filtering.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'filtering_service.g.dart';
+part 'category_filtering_service.g.dart';
 
-class FilteringService {
-  FilteringService(this.ref);
+class CategoryFilteringService {
+  CategoryFilteringService(this.ref);
   final Ref ref;
 
   /// fetch the filtering from the local or remote repository
@@ -19,10 +21,12 @@ class FilteringService {
     final user = ref.read(authRepositoryProvider).currentUser;
     if (user != null) {
       return ref
-          .read(remoteFilteringRepositoryProvider)
+          .read(remoteCategoryFilteringRepositoryProvider)
           .fetchFiltering(user.uid);
     } else {
-      return ref.read(localFilteringRepositoryProvider).fetchFiltering();
+      return ref
+          .read(localCategoryFilteringRepositoryProvider)
+          .fetchFiltering();
     }
   }
 
@@ -32,11 +36,11 @@ class FilteringService {
     final user = ref.read(authRepositoryProvider).currentUser;
     if (user != null) {
       await ref
-          .read(remoteFilteringRepositoryProvider)
+          .read(remoteCategoryFilteringRepositoryProvider)
           .updateFiltering(user.uid, filtering);
     } else {
       await ref
-          .read(localFilteringRepositoryProvider)
+          .read(localCategoryFilteringRepositoryProvider)
           .updateFiltering(filtering);
     }
   }
@@ -66,18 +70,19 @@ class FilteringService {
 }
 
 @Riverpod(keepAlive: true)
-FilteringService filteringService(FilteringServiceRef ref) {
-  return FilteringService(ref);
+CategoryFilteringService categoryFilteringService(
+    CategoryFilteringServiceRef ref) {
+  return CategoryFilteringService(ref);
 }
 
 @Riverpod(keepAlive: true)
-Stream<Filtering> filtering(FilteringRef ref) {
+Stream<Filtering> categoryFiltering(CategoryFilteringRef ref) {
   final user = ref.watch(authStateChangesProvider).value;
   if (user != null) {
     return ref
-        .watch(remoteFilteringRepositoryProvider)
+        .watch(remoteCategoryFilteringRepositoryProvider)
         .watchFiltering(user.uid);
   } else {
-    return ref.watch(localFilteringRepositoryProvider).watchFiltering();
+    return ref.watch(localCategoryFilteringRepositoryProvider).watchFiltering();
   }
 }

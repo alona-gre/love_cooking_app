@@ -36,7 +36,7 @@ final collectionProvider = StreamProvider<Collection>.internal(
 
 typedef CollectionRef = StreamProviderRef<Collection>;
 String _$collectionItemsCountHash() =>
-    r'3b62ab662ae18356672843860685cd2d2f536bd8';
+    r'dcf2c2a15dbfabf39abc74d089fdd44b628b7edd';
 
 /// See also [collectionItemsCount].
 @ProviderFor(collectionItemsCount)

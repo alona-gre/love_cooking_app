@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:love_cooking_app/src/constants/test_recipes.dart';
-import 'package:love_cooking_app/src/features/filters/application/filtering_service.dart';
+import 'package:love_cooking_app/src/features/filters/application/category_filtering_service.dart';
+import 'package:love_cooking_app/src/features/filters/application/diet_filtering_service.dart';
 import 'package:love_cooking_app/src/features/filters/domain/filtering.dart';
-import 'package:love_cooking_app/src/features/filters/presentation/filtering_controller/filtering_controller.dart';
+import 'package:love_cooking_app/src/features/filters/presentation/filtering_controller/category_filtering_controller.dart';
+import 'package:love_cooking_app/src/features/filters/presentation/filtering_controller/diet_filtering_controller.dart';
 import 'package:love_cooking_app/src/features/recipes/domain/recipe.dart';
 import 'package:love_cooking_app/src/utils/delay.dart';
 import 'package:love_cooking_app/src/utils/in_memory_store.dart';
@@ -80,38 +82,40 @@ class FakeRecipesRepository {
   }
 
   /// Filter all recipes where the category contains the filter(s) and booleans match the filter
-  Future<List<Recipe>> filterRecipesFuture(Filtering filtering) async {
+  Future<List<Recipe>> filterRecipesFuture(
+      Filtering categoryFiltering, Filtering dietFiltering) async {
     // Get all recipes
     final recipesList = await fetchRecipesList();
 
     // Convert the Filtering object to a Map<String, bool>
-    final filters = filtering.filters;
+    final catFiltering = categoryFiltering.filters;
+    final dFiltering = dietFiltering.filters;
 
     // Determine which category filters are enabled
     final categoryFilters = {
-      'breakfast': filters['breakfast'] ?? false,
-      'lunch': filters['lunch'] ?? false,
-      'dinner': filters['dinner'] ?? false,
-      'dessert': filters['dessert'] ?? false,
-      'italian': filters['italian'] ?? false,
-      'Quick & Easy': filters['quickEasy'] ?? false,
-      'hamburgers': filters['hamburgers'] ?? false,
-      'german': filters['german'] ?? false,
-      'exotic': filters['exotic'] ?? false,
-      'light': filters['light'] ?? false,
-      'asian': filters['asian'] ?? false,
-      'french': filters['french'] ?? false,
-      'summer': filters['summer'] ?? false,
-      'sandwiches': filters['sandwiches'] ?? false,
+      'breakfast': catFiltering['breakfast'] ?? false,
+      'lunch': catFiltering['lunch'] ?? false,
+      'dinner': catFiltering['dinner'] ?? false,
+      'dessert': catFiltering['dessert'] ?? false,
+      'italian': catFiltering['italian'] ?? false,
+      'Quick & Easy': catFiltering['quickEasy'] ?? false,
+      'hamburgers': catFiltering['hamburgers'] ?? false,
+      'german': catFiltering['german'] ?? false,
+      'exotic': catFiltering['exotic'] ?? false,
+      'light': catFiltering['light'] ?? false,
+      'asian': catFiltering['asian'] ?? false,
+      'french': catFiltering['french'] ?? false,
+      'summer': catFiltering['summer'] ?? false,
+      'sandwiches': catFiltering['sandwiches'] ?? false,
     };
 
-    // // Determine which boolean filters are enabled
-    // final booleanFilters = {
-    //   'glutenFree': filters['glutenFree'] ?? false,
-    //   'lactoseFree': filters['lactoseFree'] ?? false,
-    //   'vegetarian': filters['vegetarian'] ?? false,
-    //   'vegan': filters['vegan'] ?? false,
-    // };
+    // Determine which diet filters are enabled
+    final dietFilters = {
+      'glutenFree': dFiltering['glutenFree'] ?? false,
+      'lactoseFree': dFiltering['lactoseFree'] ?? false,
+      'vegetarian': dFiltering['vegetarian'] ?? false,
+      'vegan': dFiltering['vegan'] ?? false,
+    };
 
     // Return the filtered list of recipes
     return recipesList.where((recipe) {
@@ -125,26 +129,24 @@ class FakeRecipesRepository {
         matchesCategory = true;
       }
 
-      // // Check if the recipe matches all active boolean filters
-      // bool matchesBoolean = booleanFilters.entries.every((entry) {
-      //   if (!entry.value) return true; // If the filter is not active, ignore it
-      //   switch (entry.key) {
-      //     case 'glutenFree':
-      //       return recipe.isGlutenFree;
-      //     case 'lactoseFree':
-      //       return recipe.isLactoseFree;
-      //     case 'vegetarian':
-      //       return recipe.isVegetarian;
-      //     case 'vegan':
-      //       return recipe.isVegan;
-      //     default:
-      //       return true; // Just a fallback, should not be hit
-      //   }
-      // });
+      // Check if the recipe matches all active diet filters
+      bool matchesDiet = dietFilters.entries.every((entry) {
+        if (!entry.value) return true; // If the filter is not active, ignore it
+        switch (entry.key) {
+          case 'glutenFree':
+            return recipe.isGlutenFree;
+          case 'lactoseFree':
+            return recipe.isLactoseFree;
+          case 'vegetarian':
+            return recipe.isVegetarian;
+          case 'vegan':
+            return recipe.isVegan;
+          default:
+            return true; // Just a fallback, should not be hit
+        }
+      });
 
-      return matchesCategory
-          //&& matchesBoolean
-          ;
+      return matchesCategory && matchesDiet;
     }).toList();
   }
 
@@ -198,8 +200,13 @@ Future<List<Recipe>> recipesListSearch(
 Future<List<Recipe>> filteredRecipesFuture(FilteredRecipesFutureRef ref) async {
   final recipesRepository = ref.watch(recipesRepositoryProvider);
 
-  final filters = ref.watch(filteringControllerProvider).value ??
-      await ref.watch(filteringServiceProvider).fetchFiltering();
-  final filteredRecipes = await recipesRepository.filterRecipesFuture(filters);
+  final categoryFilters =
+      ref.watch(categoryFilteringControllerProvider).value ??
+          await ref.watch(categoryFilteringServiceProvider).fetchFiltering();
+  final dietFilters = ref.watch(dietFilteringControllerProvider).value ??
+      await ref.watch(dietFilteringServiceProvider).fetchFiltering();
+
+  final filteredRecipes =
+      await recipesRepository.filterRecipesFuture(categoryFilters, dietFilters);
   return filteredRecipes;
 }

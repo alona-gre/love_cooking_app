@@ -30,6 +30,7 @@ class UserNotFoundException extends AppException {
   UserNotFoundException() : super('user-not-found', 'User not found'.hardcoded);
 }
 
+/// TODO correct exceptions
 /// Cart
 class CartSyncFailedException extends AppException {
   CartSyncFailedException()

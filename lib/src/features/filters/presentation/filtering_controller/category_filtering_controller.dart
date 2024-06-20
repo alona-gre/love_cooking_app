@@ -1,13 +1,14 @@
-import 'package:love_cooking_app/src/features/filters/application/filtering_service.dart';
+import 'package:love_cooking_app/src/features/filters/application/category_filtering_service.dart';
 import 'package:love_cooking_app/src/features/filters/domain/filtering.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'filtering_controller.g.dart';
+part 'category_filtering_controller.g.dart';
 
 @riverpod
-class FilteringController extends _$FilteringController {
+class CategoryFilteringController extends _$CategoryFilteringController {
   bool mounted = true;
-  FilteringService get filteringService => ref.read(filteringServiceProvider);
+  CategoryFilteringService get filteringService =>
+      ref.read(categoryFilteringServiceProvider);
 
   @override
   FutureOr<Filtering> build() async {
@@ -15,8 +16,8 @@ class FilteringController extends _$FilteringController {
       mounted = false;
     });
     // Load initial state from the repository
-    final initialFilters = await filteringService.fetchFiltering();
-    return initialFilters;
+    final initialCategoryFilters = await filteringService.fetchFiltering();
+    return initialCategoryFilters;
   }
 
   void setFilter(String filterName, bool isActive) {

@@ -333,7 +333,7 @@ class _RecipesListSearchProviderElement
 }
 
 String _$filteredRecipesFutureHash() =>
-    r'3214d930df8b5e94406a3134a55e18a113fbf9aa';
+    r'13cd0928de0402dd54c95fe06587b3e91866ca23';
 
 /// See also [filteredRecipesFuture].
 @ProviderFor(filteredRecipesFuture)

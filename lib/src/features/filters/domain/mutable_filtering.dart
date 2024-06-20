@@ -3,7 +3,7 @@ import 'package:love_cooking_app/src/features/filters/domain/filtering.dart';
 
 /// Helper extension used to mutate the filters in the filtering settings.
 extension MutableFiltering on Filtering {
-  /// add an item to the cart by *overriding* the quantity if it already exists
+  /// add an item to the filtering by *overriding* the value if it already exists
   Filtering updateFilterItem(FilterItem filterItem) {
     final copy = Map<String, bool>.from(filters);
     copy[filterItem.filterName] = filterItem.isEnabled;

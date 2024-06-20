@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:love_cooking_app/src/common_widgets/responsive_center.dart';
 import 'package:love_cooking_app/src/constants/app_sizes.dart';
 
-/// Responsive widget showing the cart items and the checkout button
+/// Responsive widget showing the collection items and the checkout button
 class CollectionItemsBuilder extends StatelessWidget {
   const CollectionItemsBuilder({
     super.key,

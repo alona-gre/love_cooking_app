@@ -5,8 +5,11 @@ import 'package:love_cooking_app/src/features/collection/application/collection_
 import 'package:love_cooking_app/src/features/collection/data/local/local_collection_repository.dart';
 import 'package:love_cooking_app/src/features/collection/data/local/sembast_collection_repository.dart';
 import 'package:love_cooking_app/src/features/filters/application/filtering_sync_service.dart';
-import 'package:love_cooking_app/src/features/filters/data/local/local_filtering_repository.dart';
-import 'package:love_cooking_app/src/features/filters/data/local/sembast_filtering_repository.dart';
+import 'package:love_cooking_app/src/features/filters/data/local/category/local_category_filtering_repository.dart';
+import 'package:love_cooking_app/src/features/filters/data/local/category/sembast_filtering_repository.dart';
+import 'package:love_cooking_app/src/features/filters/data/local/diet/local_diet_filtering_repository.dart';
+import 'package:love_cooking_app/src/features/filters/data/local/diet/sembast_diet_filtering_repository.dart';
+
 import 'package:love_cooking_app/src/localization/string_hardcoded.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -22,15 +25,19 @@ void main() async {
   // * https://docs.flutter.dev/testing/errors
   final localCollectionRepository =
       await SembastCollectionRepository.makeDefault();
-  final localFilteringRepository =
-      await SembastFilteringRepository.makeDefault();
+  final localCategoryFilteringRepository =
+      await SembastCategoryFilteringRepository.makeDefault();
+  final localDietFilteringRepository =
+      await SembastDietFilteringRepository.makeDefault();
   // * Create ProviderContainer with any required overrides
   final container = ProviderContainer(
     overrides: [
       localCollectionRepositoryProvider
           .overrideWithValue(localCollectionRepository),
-      localFilteringRepositoryProvider
-          .overrideWithValue(localFilteringRepository),
+      localCategoryFilteringRepositoryProvider
+          .overrideWithValue(localCategoryFilteringRepository),
+      localDietFilteringRepositoryProvider
+          .overrideWithValue(localDietFilteringRepository),
     ],
     observers: [AsyncErrorLogger()],
   );

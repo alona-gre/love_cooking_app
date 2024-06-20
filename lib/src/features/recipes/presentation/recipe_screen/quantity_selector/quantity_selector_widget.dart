@@ -9,7 +9,7 @@ import 'package:love_cooking_app/src/localization/string_hardcoded.dart';
 import 'package:love_cooking_app/src/utils/async_value_ui.dart';
 
 /// A widget that shows an [ItemQuantitySelector] along with a [PrimaryButton]
-/// to add the selected quantity of the item to the cart.
+/// to calculate ingredients for the selected number of servings.
 class QuantitySelectorWidget extends ConsumerWidget {
   const QuantitySelectorWidget({super.key, required this.recipe});
   final Recipe recipe;

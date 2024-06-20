@@ -88,7 +88,7 @@ Stream<Collection> collection(CollectionRef ref) {
 @Riverpod(keepAlive: true)
 int collectionItemsCount(CollectionItemsCountRef ref) {
   return ref.watch(collectionProvider).maybeMap(
-        data: (cart) => cart.value.items.length,
+        data: (col) => col.value.items.length,
         orElse: () => 0,
       );
 }

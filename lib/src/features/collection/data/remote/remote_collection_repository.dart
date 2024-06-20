@@ -15,6 +15,6 @@ abstract class RemoteCollectionRepository {
 @Riverpod(keepAlive: true)
 RemoteCollectionRepository remoteCollectionRepository(
     RemoteCollectionRepositoryRef ref) {
-  // TODO: replace with "real" remote cart repository
+  // TODO: replace with "real" remote collection repository
   return FakeRemoteCollectionRepository(addDelay: false);
 }

@@ -5,7 +5,7 @@ import 'package:love_cooking_app/src/constants/app_sizes.dart';
 import 'package:love_cooking_app/src/features/collection/application/collection_service.dart';
 import 'package:love_cooking_app/src/routing/app_router.dart';
 
-/// Shopping cart icon with items count badge
+/// Collection icon with items count badge
 class CollectionIcon extends ConsumerWidget {
   const CollectionIcon({super.key});
 
