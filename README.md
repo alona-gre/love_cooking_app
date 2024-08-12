@@ -25,7 +25,7 @@ It includes a full-stack love_cooking app using Flutter & Firebase.
 To clone the repo for the first time and open it in VSCode, run this:
 
 ```
-git clone https://github.com/alona_gre/love_cooking_app.git
+git clone https://github.com/alona-gre/love_cooking_app.git
 cd love_cooking_app
 code .
 ```
